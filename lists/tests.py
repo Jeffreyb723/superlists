@@ -12,7 +12,8 @@ class HomePageTests(TestCase):
     def test_home_page_returns_correct_html(self):
         request = HttpRequest()
         response = home_page(request)  
+        expected_html = render_to_string('home.html')
         html = response.content.decode('utf8')  
-        self.assertTrue(html.startswith('<html>'))  
-        self.assertIn('<title>To-Do lists</title>', html)  
-        self.assertTrue(html.endswith('</html>'))
+        self.assertTrue(response.content.startswith(b'<html>'))  
+        self.assertIn(b'<title>To-Do lists</title>', response.content)  
+        self.assertTrue(response.content.strip().endswith(b'</html>'))
