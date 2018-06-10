@@ -13,7 +13,4 @@ class HomePageTests(TestCase):
         request = HttpRequest()
         response = home_page(request)  
         expected_html = render_to_string('home.html')
-        html = response.content.decode('utf8')  
-        self.assertTrue(response.content.startswith(b'<html>'))  
-        self.assertIn(b'<title>To-Do lists</title>', response.content)  
-        self.assertTrue(response.content.strip().endswith(b'</html>'))
+        self.assertEqual(response.content.decode(), expected.html)
