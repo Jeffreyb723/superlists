@@ -4,14 +4,15 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 class NewVisitorTest(StaticLiveServerTestCase):
+
     @classmethod
     def setUpClass(cls):
         for arg in sys.argv:
             if 'liveserver' in arg:
                 cls.server_url = 'http://' + arg.split('=')[1]
                 return
-            super().setUpClass()
-            cls.server_url = cls.live_server_url
+        super().setUpClass()
+        cls.server_url = cls.live_server_url
 
     @classmethod
     def tearDownClass(cls):
@@ -27,9 +28,12 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
     def check_for_row_in_list_table(self, row_text):
         import time
-        time.sleep(.1)
+        time.sleep(1)
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
+
+        time.sleep(1)
+        
         self.assertIn(row_text, [row.text for row in rows])
         
     def test_can_start_a_list_and_retrieve_it_later(self):
@@ -58,7 +62,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         # to-do list table
         inputbox.send_keys(Keys.ENTER)
         import time
-        time.sleep(.1)
+        time.sleep(1)
         edith_list_url = self.browser.current_url
         self.assertRegex(edith_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
@@ -84,8 +88,9 @@ class NewVisitorTest(StaticLiveServerTestCase):
         # Francis visits the home page. There is no sign of Edith's
         # list
         self.browser.get(self.server_url)
-        import time
-        time.sleep(.1)
+        
+        time.sleep(1)
+
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertNotIn('make a fly', page_text)
@@ -97,15 +102,17 @@ class NewVisitorTest(StaticLiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
         # Francis gets his own unique URL
-        import time
-        time.sleep(.1)
+
+        time.sleep(1)
+
         francis_list_url = self.browser.current_url
         self.assertRegex(francis_list_url, '/lists/.+')
         self.assertNotEqual(francis_list_url, edith_list_url)
 
         # Again, there is no trace of Edith's list
-        import time
-        time.sleep(.1)
+
+        time.sleep(1)
+
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertIn('Buy milk', page_text)
