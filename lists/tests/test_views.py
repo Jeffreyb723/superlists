@@ -97,7 +97,7 @@ class ListViewTest(TestCase):
         response = self.post_invalid_input()
         self.assertContains(response, escape(EMPTY_LIST_ERROR))
 
-def test_displays_item_form(self):
+    def test_displays_item_form(self):
         list_ = List.objects.create()
         response = self.client.get('/lists/%d/' % (list_.id,))
         self.assertIsInstance(response.context['form'], ItemForm)
