@@ -55,9 +55,6 @@ class NewVisitorTest(FunctionalTest):
         # Francis visits the home page. There is no sign of Edith's
         # list
         self.browser.get(self.server_url)
-        
-        time.sleep(.1)
-
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertNotIn('make a fly', page_text)
@@ -69,21 +66,15 @@ class NewVisitorTest(FunctionalTest):
         inputbox.send_keys(Keys.ENTER)
 
         # Francis gets his own unique URL
-
         time.sleep(.1)
-
         francis_list_url = self.browser.current_url
         self.assertRegex(francis_list_url, '/lists/.+')
         self.assertNotEqual(francis_list_url, edith_list_url)
 
         # Again, there is no trace of Edith's list
-
-        time.sleep(.1)
-
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertIn('Buy milk', page_text)
 
         # Satisfied, they both go back to sleep
-        
         self.browser.quit()
