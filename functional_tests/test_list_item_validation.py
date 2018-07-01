@@ -32,7 +32,7 @@ class ItemValidationTest(FunctionalTest):
         self.assertEqual(error.text, "You can't have an empty list item")
 
         # And she can correct it by filling some text in
-        self.get_item_input_box().send_keys('Make tea')
+        self.get_item_input_box().send_keys('Make tea\n')
         self.get_item_input_box().send_keys(Keys.ENTER)
         time.sleep(1)
         self.check_for_row_in_list_table('1: Buy milk')
